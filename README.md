@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-# freecad-scripts
-A collection of FreeCAD scripts accumulated over time.
-=======
-# oshw-scripts
+# oshw-code
 A collection of code related to Open Source Hardware files.
->>>>>>> cd3661ea8d33c12239058b8bf049b0c18b319ca1
+
+## Scripts
+* fcstd_to_step_converter - Simple (and rough) script for converting a FreeCAD 0.16 fcstd file to a STEP. It assumes a single object from the fcstd file in its current iteration.
