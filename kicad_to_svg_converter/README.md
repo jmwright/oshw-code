@@ -19,7 +19,7 @@ export DISPLAY=":0.0"
 
 ## Usage
 
-1. Put a KiCAD project's *.pro, *-cache.lib and *.sch files in the `to_convert` directory.
+1. Put a KiCAD project's `*.pro`, `*-cache.lib` and `*.sch` files in the `to_convert` directory.
 2. Run the `export_schematic.py` script, passing the name of the .sch file as an argument.
 
 ```bash
