@@ -61,3 +61,8 @@ Run the following to connect to the server using VNC, substituting the IP addres
 ```bash
 vncviewer <server_ip_address>
 ```
+
+## Sources
+1. [Splitflap Clock Project Export Scripts By Scott Bezek](https://github.com/scottbez1/splitflap/tree/master/electronics/scripts)
+2. [KiCAD Forum Discussion](https://forum.kicad.info/t/web-viewing-of-kicad-files/7645/26)
+3. [Viewing Xvfb Display StackOverflow](https://stackoverflow.com/questions/12050021/how-to-make-xvfb-display-visible)
