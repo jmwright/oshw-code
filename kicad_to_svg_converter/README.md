@@ -2,6 +2,8 @@
 
 This converter is in pre-alpha release condition and will change a lot as development progresses.
 
+This converter is meant to be run as a Docker container so that it can be part of a compartmentalized build system.
+
 ## Installing
 
 The following packages need to be installed before using this script. The following commands assume Ubuntu Server.
