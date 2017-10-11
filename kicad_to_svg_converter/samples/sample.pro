@@ -27,11 +27,11 @@ NetIExt=net
 version=1
 LibDir=
 [eeschema/libraries]
-LibName1=power
+LibName1=sample-cache
 LibName2=device
 LibName3=switches
 LibName4=relays
-LibName5=motors
+LibName5=power
 LibName6=transistors
 LibName7=conn
 LibName8=linear
