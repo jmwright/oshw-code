@@ -12,14 +12,12 @@
 #   limitations under the License.
 import os
 import sys
-import subprocess
 import time
+import argparse
 
 # Get the path of this script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 exports_dir = os.path.join(script_dir, 'output')
-
-input_file = ""
 
 # Make sure that modules can be imported
 sys.path.append(script_dir)
@@ -36,7 +34,9 @@ def usage():
     print("./convert_kicad_schematic.py input/FILE_TO_EXPORT.sch")
 
 
-def convertFile():
+def convertFile(args):
+    input_file = args.in_spec
+
     with PopenContext(['eeschema', input_file], close_fds=True) as eeschema_proc:
         wait_for_window('eeschema', 'kicad_to_svg_converter')
 
@@ -74,10 +74,25 @@ def convertFile():
     # print(exports_dir)
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        usage()
-        exit()
-    else:
-        input_file = sys.argv[1]
+    desc = """
+    Converts a KiCAD schematic to SVG format for display and diff-ing.
+    A schematic can be provided as a file or as standard input.
+    The svg is written the supplied output directory.
+        """
+    filename_pattern_help = """
+    Filename pattern to use when creating output files.
+    The sequential file number and the format are available.
+    Default: schematic-%%(counter)d.%%(format)s
+    Use stdout to write to stdout
+        """
+    parser = argparse.ArgumentParser(description=desc)
+    parser.add_argument("--format", action="store", default="SVG",
+                        help="Output schematic file format (SVG)")
+    parser.add_argument("--in_spec", action="store", required=True,
+                        help="Input file path. Use stdin to read standard in")
+    parser.add_argument("--out_spec", action="store",
+                        default="./schematic-%(counter)d.%(format)s",
+                        help=filename_pattern_help)
+    args = parser.parse_args()
 
-    convertFile()
+    convertFile(args)
