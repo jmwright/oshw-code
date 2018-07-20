@@ -121,6 +121,22 @@ def initialize():
 
 
 """
+Does a git clone step for the project at the given URL
+"""
+def clone(url):
+    print("Recursively cloning Sliderule project from git.")
+
+    call(["git", "clone", "--recurse-submodules", url])
+
+    url_parts = url.split("/")
+    dir_name = url_parts[len(url_parts) - 1].split('.')[0]
+
+    os.chdir(dir_name)
+
+    # Make sure that the project has all the latest Sliderule structure to it
+    initialize()
+
+"""
 Does the git commit step for this project
 """
 def commit(message):
@@ -157,13 +173,12 @@ Adds a component as a git submodule.
 def add_submodule(url):
     print("Adding component as submodule.")
 
+    # TODO: Check to see if the component has already been added
+
     component_names = url.split("/")
-    print(len(component_names))
-    component_name = component_names[len(component_names) - 1]
-    print("git submodule add " + url + " components/" + component_name)
-    # call(["git", "submodule", "add", url, "components/" + component_name])
-    # print(url)
-    # git submodule add git@mygithost:billboard lib/billboard
+    component_name = component_names[len(component_names) - 1].split('.')[0]
+
+    call(["git", "submodule", "add", url, "components/" + component_name])
 
 
 """

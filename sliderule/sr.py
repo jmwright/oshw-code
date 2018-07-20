@@ -11,6 +11,8 @@ upload.add_argument('-m')
 component = subparsers.add_parser('component')
 component.add_argument('action', nargs='?')
 component.add_argument('url')
+clone = subparsers.add_parser('clone')
+clone.add_argument('url')
 
 # Example of optional argument
 # parser.add_argument('init', nargs='?')
@@ -30,13 +32,14 @@ def main():
         sliderule_impl.pull()
     # The user wants to add a component
     elif args.command == 'component':
-        print(args)
         if args.action == 'add':
             sliderule_impl.add_submodule(args.url)
         elif args.action == 'remove':
             sliderule_impl.remove_submodule(args.url)
         else:
             print("ERROR: You have to 'add' or 'remove' a component.")
+    elif args.command == 'clone':
+        sliderule_impl.clone(args.url)
 
 
 if __name__ == "__main__":
