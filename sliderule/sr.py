@@ -8,6 +8,9 @@ init = subparsers.add_parser('init')
 update = subparsers.add_parser('update')
 upload = subparsers.add_parser('upload')
 upload.add_argument('-m')
+component = subparsers.add_parser('component')
+component.add_argument('action', nargs='?')
+component.add_argument('url')
 
 # Example of optional argument
 # parser.add_argument('init', nargs='?')
@@ -25,6 +28,15 @@ def main():
     # The user wants to pull changes to a Sliderul project from git
     elif args.command == 'update':
         sliderule_impl.pull()
+    # The user wants to add a component
+    elif args.command == 'component':
+        print(args)
+        if args.action == 'add':
+            sliderule_impl.add_submodule(args.url)
+        elif args.action == 'remove':
+            sliderule_impl.remove_submodule(args.url)
+        else:
+            print("ERROR: You have to 'add' or 'remove' a component.")
 
 
 if __name__ == "__main__":

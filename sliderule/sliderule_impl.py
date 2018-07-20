@@ -149,3 +149,26 @@ def pull():
     print("Pulling changes from git.")
     call(["git", "pull", "origin", "master"])
     call(["git", "submodule", "update", "--recursive", "--remote"])
+
+
+"""
+Adds a component as a git submodule.
+"""
+def add_submodule(url):
+    print("Adding component as submodule.")
+
+    component_names = url.split("/")
+    print(len(component_names))
+    component_name = component_names[len(component_names) - 1]
+    print("git submodule add " + url + " components/" + component_name)
+    # call(["git", "submodule", "add", url, "components/" + component_name])
+    # print(url)
+    # git submodule add git@mygithost:billboard lib/billboard
+
+
+"""
+Remove a git submodule
+"""
+def remove_submodule(url):
+    print("Removing component.")
+    print(url)
