@@ -13,11 +13,9 @@ An `sr` symlink can be created to sr.py for convenience, otherwise run these com
 
 ### Current Commands
 - `sr init` - Initializes a directory as a new Sliderule project, creating files and directories as needed to match the methodology.
+- `sr clone [URL]` - Clones a Sliderule project recursively,downloading all components.
 - `sr upload -m [message]` - Commits and pushes a project to git recursively, assuming the master branch. _Future:_ It will commit and push all components recursively, dealing with only the components/repos the user has access to.
 - `sr update` - Updates a Sliderule project recursively, pulling root changes and component changes recursively. _Future:_ It will build BoMs and run any `sliderule.py` files found throughout the directory structure. Security concerns will need to be addressed with running Python files from third-party sources.
-
-### Future Commands
-- `sr clone [URL]` - Clones a Sliderule project recursively,downloading all components.
 - `sr component` - Has subcommands that allow the addition, removal and modification of components in the directory tree. Components are treated as git submodules of the main project.
   - `sr component add [url]` - Adds the component via its URL. Note that the URL must exist prior to running this command. The git repo for the component is not created automatically at this time.
-  - `sr component remove [name]` - Removes a component from a project (deletes its submodule).
+  - _Future:_ `sr component remove [name]` - Removes a component from a project (deletes its submodule).
