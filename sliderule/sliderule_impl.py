@@ -23,6 +23,10 @@ def createComponents():
     # Create the components directory
     os.makedirs("./components")
 
+    # Create the Python init file to make this a package
+    index_file = open("./components/__init__.py", "w+")
+    index_file.close()
+
 
 def createDocs():
     print("Creating docs directory from template.")
@@ -65,7 +69,7 @@ def initialize():
     print()
 
     # Check if the user has already initialized this directory as a git repo
-    if os.path.isdir("./.git"):
+    if os.path.exists("./.git"):
         print(bcolors.WARNING + "WARNING: This directory is already set up as a git repository. To change the remote, please do so directly with git commands." + bcolors.ENDC)
     else:
         print("Initializing git repo.")
@@ -179,6 +183,13 @@ def add_submodule(url):
     component_name = component_names[len(component_names) - 1].split('.')[0]
 
     call(["git", "submodule", "add", url, "components/" + component_name])
+
+    # Make sure the root project and all the submodules are updated
+    pull()
+
+    os.chdir("./components/" + component_name)
+
+    initialize()
 
 
 """
