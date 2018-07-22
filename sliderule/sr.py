@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import argparse
 import sliderule_impl
 
@@ -27,15 +28,27 @@ def main():
     elif args.command == 'upload':
         sliderule_impl.commit(args.m)
         sliderule_impl.push()
+
+        # Walk through the components in the directory tree, committing as necessary
+        for dirname, dirnames, filenames in os.walk('./components'):
+            for subdirname in dirnames:
+                os.chdir("./components/" + subdirname)
+
+                sliderule_impl.commit(None)
+                sliderule_impl.push()
+                
+                os.chdir("../")
     # The user wants to pull changes to a Sliderul project from git
     elif args.command == 'update':
         sliderule_impl.pull()
     # The user wants to add a component
     elif args.command == 'component':
         if args.action == 'add':
-            sliderule_impl.add_submodule(args.url)
+            sliderule_impl.add_component(args.url)
         elif args.action == 'remove':
-            sliderule_impl.remove_submodule(args.url)
+            sliderule_impl.remove_component(args.url)
+        elif args.action == 'create':
+            sliderule_impl.create_component(args.url)
         else:
             print("ERROR: You have to 'add' or 'remove' a component.")
     elif args.command == 'clone':
