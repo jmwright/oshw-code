@@ -6,6 +6,7 @@ import sliderule_impl
 parser = argparse.ArgumentParser(description='Helps maintain Sliderule OSHW projects.')
 subparsers = parser.add_subparsers(dest='command')
 init = subparsers.add_parser('init')
+status = subparsers.add_parser('status')
 update = subparsers.add_parser('update')
 upload = subparsers.add_parser('upload')
 upload.add_argument('-m')
@@ -29,18 +30,35 @@ def main():
         sliderule_impl.commit(args.m)
         sliderule_impl.push()
 
-        # Walk through the components in the directory tree, committing as necessary
-        for dirname, dirnames, filenames in os.walk('./components'):
-            for subdirname in dirnames:
-                os.chdir("./components/" + subdirname)
+        components = os.listdir('./components')
 
-                sliderule_impl.commit(None)
-                sliderule_impl.push()
-                
-                os.chdir("../")
+       # Walk through the components in the directory tree, committing as necessary
+        for component in components:
+            if not os.path.isdir("./components/" + component):
+                continue
+
+            os.chdir("./components/" + component)
+
+            sliderule_impl.commit(None)
+            sliderule_impl.push()
+            
+            os.chdir("../../")
     # The user wants to pull changes to a Sliderul project from git
     elif args.command == 'update':
         sliderule_impl.pull()
+
+        components = os.listdir('./components')
+
+        # Walk through the components in the directory tree, committing as necessary
+        for component in components:
+            if not os.path.isdir("./components/" + component):
+                continue
+
+            os.chdir("./components/" + component)
+
+            sliderule_impl.pull()
+            
+            os.chdir("../../")
     # The user wants to add a component
     elif args.command == 'component':
         if args.action == 'add':
@@ -53,6 +71,22 @@ def main():
             print("ERROR: You have to 'add' or 'remove' a component.")
     elif args.command == 'clone':
         sliderule_impl.clone(args.url)
+    elif args.command == 'status':
+        sliderule_impl.status()
+
+        components = os.listdir('./components')
+
+        # Walk through the components in the directory tree, committing as necessary
+        for component in components:
+            if not os.path.isdir("./components/" + component):
+                continue
+
+            os.chdir("./components/" + component)
+
+            sliderule_impl.status()
+            
+            os.chdir("../../")
+
 
 
 if __name__ == "__main__":

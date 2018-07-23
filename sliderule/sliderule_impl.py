@@ -63,6 +63,17 @@ def create_bom():
 
 
 """
+Initializes a directory as a Python package
+"""
+def init_python_package():
+    print("Initializing directory as a Python package.")
+
+    # Create an __init__.py file
+    init_py = open("./__init__.py", "+w")
+    init_py.close()
+
+
+"""
 Creates the directories and files that are required for the Sliderule project
 """
 def initialize(git_init=True, url=None):
@@ -125,6 +136,13 @@ def initialize(git_init=True, url=None):
         print()
         print(bcolors.WARNING + "WARNING: docs directory exists, refusing to overwrite to prevent loss of data." + bcolors.ENDC)
 
+    # If the directory has not been initialized as a Python package, create the init.py file
+    if not os.path.isfile("./__init__.py"):
+        print()
+        print("The directory has not been initialized as a Python package.")
+
+        init_python_package()
+
     print()
     print("Done initializing new Sliderule project.")
 
@@ -151,6 +169,7 @@ Does the git commit step for this project
 def commit(message=None):
     # Check git status to see if there are any changes to commit/push
     items = str(check_output(["git", "status"]))
+    print(items)
     if "nothing to commit" not in items:
         print("Adding files to git.")
         call(["git", "add", "."])
@@ -183,6 +202,13 @@ def pull():
     print("Pulling changes from git.")
     call(["git", "pull", "origin", "master"])
     call(["git", "submodule", "update", "--recursive", "--remote"])
+
+
+"""
+See what's changed
+"""
+def status():
+    call(["git", "status"])
 
 
 """
