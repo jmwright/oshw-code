@@ -249,6 +249,10 @@ def create_component(url):
     component_names = url.split("/")
     component_name = component_names[len(component_names) - 1].split('.')[0]
 
+    # Warn the user if the component name has dashes in it, which could break things like the Python naming conventions
+    if "-" in component_name:
+        print(bcolors.WARNING + "WARNING: The component name has dashes in it, which can break some package naming conventions (Python)." + bcolors.ENDC)
+
     # Check to see if the component already exists
     if os._exists("./components/" + component_name):
         print("Component already exists.")
